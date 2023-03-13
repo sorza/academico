@@ -8,6 +8,17 @@ botaoAdicionar.addEventListener("click", function(event) {
 
     var pacienteTr = montaTr(paciente);    
 
+    var erro = validaPaciente(paciente);
+
+    if(erro.length > 0)
+    {
+        exibeMensagensdeErro(erro);
+        return;
+    }
+
+    var ul = document.querySelector("#msgErro");
+    ul.innerHTML = "";
+    
     var tabela = document.querySelector("#tabela-pacientes");
 
     tabela.appendChild(pacienteTr);
@@ -53,5 +64,29 @@ function montaTr(paciente)
     pacienteTr.appendChild(montaTd(paciente.imc, "info-imc"));
 
     return pacienteTr;
+}
+
+function validaPaciente(paciente)
+{
+    var erros = [];
+
+    if(paciente.nome.length == 0) erros.push("O nome não pode ser nulo.")
+    if(!validaPeso(paciente.peso) || paciente.peso == "") erros.push("Peso inválido.");
+    if(!validaAltura(paciente.altura) || paciente.altura == "") erros.push("Altura inválida.");
+    if(paciente.gordura < 0 || paciente.gordura > 100 || paciente.gordura == "") erros.push("O % de gordura é inválido");
+
+    return erros;
+}
+
+function exibeMensagensdeErro(erro)
+{
+    var ul = document.querySelector("#msgErro");
+    ul.innerHTML = "";
+
+    erro.forEach(element => {
+        var li = document.createElement("li");
+        li.textContent = element;
+        ul.appendChild(li);
+    });
 }
 
