@@ -15,8 +15,6 @@ botaoAdicionar.addEventListener("click", function(event) {
 
     adicionaPacienteNaTabela(paciente);
 
-   
-
     form.reset();
     var ul = document.querySelector("#msgErro");
     ul.innerHTML = "";
